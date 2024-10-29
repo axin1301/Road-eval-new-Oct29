@@ -3,7 +3,7 @@ import requests
 import zipfile
 import subprocess
 import argparse
-
+import shutil
 
 def download_zip_from_url(url, save_path):
     """
@@ -48,11 +48,11 @@ def unzip_file(zip_path, extract_to):
 def main(task):
     # # 下载链接 (你可以通过手动获取页面的 ZIP 下载链接)
     # # download_url = "https://anonymous.4open.science/api/repo/Road_eval_new-4010/zip"  # 需要根据页面的具体情况调整
-    download_url = "https://anonymous.4open.science/api/repo/Road-eval-new-Oct-F7C9/zip"
+    download_url = "https://anonymous.4open.science/api/repo/Road-eval-new-Oct29-40D1/zip"
 
     # 本地保存 ZIP 文件的路径
-    zip_save_path = "code1023.zip"
-    extract_path = "code1023"  # 解压到的文件夹
+    zip_save_path = "folder1029.zip"
+    extract_path = "folder1029"  # 解压到的文件夹
 
     # 下载 ZIP 文件
     download_zip_from_url(download_url, zip_save_path)
@@ -60,11 +60,22 @@ def main(task):
     # 解压 ZIP 文件
     unzip_file(zip_save_path, extract_path)
 
+    source_folder = "folder1029/GraphSamplingToolkit-main_improve_GE_constructed"
+
+    # 指定目标文件夹路径
+    destination_folder = "./GraphSamplingToolkit-main_improve_GE_constructed"
+
+    # 将整个文件夹移动到目标位置
+    shutil.move(source_folder, destination_folder)
+
+    py_file_list = ['average_statistics_constructed.py','main_pipeline_constructed.py','main_pipeline_constructed_single_test.py','mapcompare_GE_constructed.py','mapcompare_GE_constructed_single_test.py']
+    for py_file in py_file_list:
+        shutil.copy('folder1029/'+py_file,'code1013/'+py_file)
     # python_file_path = "main_pipeline2.py" #os.path.join(extract_path, "main_pipeline2.py")  # 替换为你要运行的文件路径
     # run_python_file(python_file_path,extract_path)
 
     # 第二步：切换到某个文件夹
-    target_directory = extract_path  # 替换为你想要切换的文件夹路径
+    target_directory = 'code1013'  # 替换为你想要切换的文件夹路径
     print(f"切换到目录: {target_directory}")
     os.chdir(target_directory)
     
@@ -85,7 +96,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="一个简单的命令行参数示例")
 
     # 添加参数
-    parser.add_argument('--task', type=str, help="输入任务类型")
+    parser.add_argument('--task', default='train', type=str, help="输入任务类型")
     # parser.add_argument('--age', type=int, help="输入你的年龄")
 
     # 解析命令行参数
