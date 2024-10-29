@@ -16,6 +16,7 @@ import mapcompare_GE_constructed
 import average_statistics_constructed
 
 if __name__ == '__main__':
+    print('running')
 
     mapcompare_GE_constructed.main()
     # mapcompare_GE_0001.main()
